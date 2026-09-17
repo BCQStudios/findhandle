@@ -11,16 +11,21 @@
     "dev": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
+    "deploy": "astro build && wrangler deploy --config dist/server/wrangler.json",
     "check": "astro check",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
-    "@astrojs/node": "^11.1.6",
+    "@astrojs/cloudflare": "^14.3.2",
     "astro": "^7.3.3",
     "typescript": "^6.0.3"
   },
   "allowScripts": {
-    "esbuild": true
+    "esbuild": true,
+    "workerd@1.20260916.1": true
+  },
+  "devDependencies": {
+    "wrangler": "^4.133.0"
   }
 }

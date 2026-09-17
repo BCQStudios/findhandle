@@ -1,6 +1,6 @@
 # Findhandle
 
-Astro 7 + Node 24 project base, scaffolded from the official [Astro basics](https://docs.astro.build/en/install-and-setup/) starter.
+Astro 7 app deployed to [Cloudflare Workers](https://developers.cloudflare.com/workers/framework-guides/web-apps/astro/).
 
 ## Requirements
 
@@ -36,6 +36,7 @@ Routes come from files in `src/pages/`. Shared UI lives in `src/layouts/` and `s
 | `npm run check`           | Type-checks `.astro` and TypeScript files        |
 | `npm run build`           | Type-checks, then builds to `./dist/`            |
 | `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run deploy`          | Build and deploy to Cloudflare Workers           |
 | `npm run astro ...`       | Run CLI commands like `astro add`                |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 

@@ -1,0 +1,22 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "findhandle",
+	"workers_dev": true,
+	"preview_urls": true,
+	"compatibility_date": "2026-09-17",
+	"compatibility_flags": ["nodejs_compat"],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": "./dist/client"
+	},
+	"kv_namespaces": [
+		{ "binding": "SESSION", "id": "c7354c016272472ab1855d7167622b88" }
+	],
+	"observability": {
+		"enabled": true
+	},
+	"routes": [
+		{ "pattern": "findhandle.com", "custom_domain": true },
+		{ "pattern": "www.findhandle.com", "custom_domain": true }
+	]
+}
