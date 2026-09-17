@@ -6,7 +6,10 @@ import Layout from '../layouts/Layout.astro';
 	<div class="page">
 		<header class="top">
 			<a class="brand" href="/">
-				<span class="mark" aria-hidden="true"></span>
+				<svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
+					<circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="2.25"/>
+					<path class="handle" d="M15 15l6.2 6.2"/>
+				</svg>
 				FindHandle
 			</a>
 			<button type="button" id="theme" role="switch" aria-checked="false" aria-label="Light mode">
@@ -172,11 +175,15 @@ import Layout from '../layouts/Layout.astro';
 	}
 
 	.mark {
-		width: 14px;
-		height: 14px;
-		border: 2px solid var(--fg);
-		border-radius: 99px;
-		box-shadow: 4px 4px 0 0 var(--available);
+		width: 20px;
+		height: 20px;
+	}
+
+	.mark .handle {
+		fill: none;
+		stroke: var(--available);
+		stroke-width: 2.5;
+		stroke-linecap: round;
 	}
 
 	main {
