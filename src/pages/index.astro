@@ -28,6 +28,7 @@ import Layout from '../layouts/Layout.astro';
 					<input
 						id="handle"
 						type="text"
+						size="1"
 						autocapitalize="none"
 						autocorrect="off"
 						maxlength="30"
@@ -153,6 +154,7 @@ import Layout from '../layouts/Layout.astro';
 	.page {
 		min-height: 100dvh;
 		display: grid;
+		grid-template-columns: minmax(0, 1fr);
 		grid-template-rows: auto 1fr auto;
 	}
 
