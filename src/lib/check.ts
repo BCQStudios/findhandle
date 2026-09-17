@@ -1,10 +1,13 @@
 export const PLATFORM_IDS = ['youtube', 'tiktok', 'x', 'facebook', 'instagram'] as const;
+export const TLD_IDS = ['com', 'net', 'org', 'io', 'ai'] as const;
 
 export type PlatformId = (typeof PLATFORM_IDS)[number];
+export type TldId = (typeof TLD_IDS)[number];
 export type CheckStatus = 'available' | 'taken' | 'invalid' | 'unknown';
 
 export type CheckResult = {
-	platform: PlatformId;
+	platform?: PlatformId;
+	tld?: TldId;
 	status: CheckStatus;
 	url: string;
 };
@@ -30,8 +33,22 @@ export const PROFILES: Record<PlatformId, (handle: string) => string> = {
 	instagram: (handle) => `https://www.instagram.com/${handle}/`,
 };
 
+const DOMAIN_RULE = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
+
+const RDAP: Record<TldId, (name: string) => string> = {
+	com: (name) => `https://rdap.verisign.com/com/v1/domain/${name}.com`,
+	net: (name) => `https://rdap.verisign.com/net/v1/domain/${name}.net`,
+	org: (name) => `https://rdap.publicinterestregistry.org/rdap/domain/${name}.org`,
+	io: (name) => `https://rdap.identitydigital.services/rdap/domain/${name}.io`,
+	ai: (name) => `https://rdap.identitydigital.services/rdap/domain/${name}.ai`,
+};
+
 export function isPlatformId(value: string): value is PlatformId {
 	return (PLATFORM_IDS as readonly string[]).includes(value);
+}
+
+export function isTldId(value: string): value is TldId {
+	return (TLD_IDS as readonly string[]).includes(value);
 }
 
 export function normalizeHandle(raw: string): string {
@@ -40,6 +57,28 @@ export function normalizeHandle(raw: string): string {
 
 export async function checkPlatforms(handle: string, platforms: PlatformId[]): Promise<CheckResult[]> {
 	return Promise.all(platforms.map((platform) => checkPlatform(handle, platform)));
+}
+
+export async function checkTlds(handle: string, tlds: TldId[]): Promise<CheckResult[]> {
+	return Promise.all(tlds.map((tld) => checkTld(handle, tld)));
+}
+
+async function checkTld(handle: string, tld: TldId): Promise<CheckResult> {
+	const url = `https://${handle}.${tld}`;
+	if (!DOMAIN_RULE.test(handle)) {
+		return { tld, status: 'invalid', url };
+	}
+
+	try {
+		const page = await load(RDAP[tld](handle), {
+			Accept: 'application/rdap+json, application/json',
+		});
+		if (page.status === 404) return { tld, status: 'available', url };
+		if (page.status === 200) return { tld, status: 'taken', url };
+		return { tld, status: 'unknown', url };
+	} catch {
+		return { tld, status: 'unknown', url };
+	}
 }
 
 async function checkPlatform(handle: string, platform: PlatformId): Promise<CheckResult> {

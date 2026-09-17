@@ -14,7 +14,7 @@ import Layout from '../layouts/Layout.astro';
 		<main>
 			<p class="kicker">Handle check</p>
 			<h1>See if a name is free</h1>
-			<p class="lede">YouTube, TikTok, X, Facebook, and Instagram.</p>
+			<p class="lede">Social handles plus .com, .net, .org, .io, and .ai.</p>
 
 			<form id="search" autocomplete="off" spellcheck="false">
 				<label class="bar">
@@ -34,8 +34,9 @@ import Layout from '../layouts/Layout.astro';
 				</label>
 			</form>
 
+			<p class="row-label">Social</p>
 			<section class="results" aria-live="polite">
-				<article class="card" data-platform="youtube" data-status="idle" style="--platform: var(--youtube)">
+				<article class="card" data-check data-platform="youtube" data-status="idle" style="--platform: var(--youtube)">
 					<div class="card-head">
 						<span class="icon" aria-hidden="true">
 							<svg viewBox="0 0 24 24"><rect x="1" y="5" width="22" height="14" rx="4" fill="currentColor"></rect><path d="M10 9.2l5.2 2.8-5.2 2.8z" fill="#070708"></path></svg>
@@ -46,7 +47,7 @@ import Layout from '../layouts/Layout.astro';
 					<a class="link" hidden target="_blank" rel="noreferrer">View</a>
 				</article>
 
-				<article class="card" data-platform="tiktok" data-status="idle" style="--platform: var(--tiktok)">
+				<article class="card" data-check data-platform="tiktok" data-status="idle" style="--platform: var(--tiktok)">
 					<div class="card-head">
 						<span class="icon tiktok" aria-hidden="true">
 							<svg viewBox="0 0 24 24"><path d="M14.2 3v10.1a3.4 3.4 0 1 1-2.4-3.2V7.3A6.2 6.2 0 1 0 17 13.2V8.4c1.1.8 2.5 1.3 4 1.4V6.6c-2.5-.2-4.5-1.8-5.2-3.6h-1.6z" fill="currentColor"></path></svg>
@@ -57,7 +58,7 @@ import Layout from '../layouts/Layout.astro';
 					<a class="link" hidden target="_blank" rel="noreferrer">View</a>
 				</article>
 
-				<article class="card" data-platform="x" data-status="idle" style="--platform: var(--x)">
+				<article class="card" data-check data-platform="x" data-status="idle" style="--platform: var(--x)">
 					<div class="card-head">
 						<span class="icon x" aria-hidden="true">
 							<svg viewBox="0 0 24 24"><path d="M14.7 10.3L22 2h-2.2l-6.1 6.9L8.7 2H2l7.8 11.1L2 22h2.2l6.8-7.7L15.3 22H22l-7.3-11.7zM11.8 13l-.8-1.1L4.9 3.5h2.7l5.1 7.2.8 1.1 6.7 9.5h-2.7L11.8 13z" fill="currentColor"></path></svg>
@@ -68,7 +69,7 @@ import Layout from '../layouts/Layout.astro';
 					<a class="link" hidden target="_blank" rel="noreferrer">View</a>
 				</article>
 
-				<article class="card" data-platform="facebook" data-status="idle" style="--platform: var(--facebook)">
+				<article class="card" data-check data-platform="facebook" data-status="idle" style="--platform: var(--facebook)">
 					<div class="card-head">
 						<span class="icon" aria-hidden="true">
 							<svg viewBox="0 0 24 24"><path d="M14.8 22v-8.2h2.8l.4-3.3h-3.2V8.5c0-1 .3-1.6 1.7-1.6H18V4c-.3 0-1.4-.1-2.6-.1-2.6 0-4.4 1.6-4.4 4.5v2.1H8.1v3.3h2.9V22h3.8z" fill="currentColor"></path></svg>
@@ -79,7 +80,7 @@ import Layout from '../layouts/Layout.astro';
 					<a class="link" hidden target="_blank" rel="noreferrer">View</a>
 				</article>
 
-				<article class="card" data-platform="instagram" data-status="idle" style="--platform: var(--instagram)">
+				<article class="card" data-check data-platform="instagram" data-status="idle" style="--platform: var(--instagram)">
 					<div class="card-head">
 						<span class="icon" aria-hidden="true">
 							<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"></rect><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"></circle><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"></circle></svg>
@@ -91,11 +92,50 @@ import Layout from '../layouts/Layout.astro';
 				</article>
 			</section>
 
+			<p class="row-label">Domains</p>
+			<section class="results" aria-live="polite">
+				<article class="card" data-check data-tld="com" data-status="idle" style="--platform: var(--com)">
+					<div class="card-head">
+						<h2>.com</h2>
+					</div>
+					<p class="state">Waiting</p>
+					<a class="link" hidden target="_blank" rel="noreferrer">Open</a>
+				</article>
+				<article class="card" data-check data-tld="net" data-status="idle" style="--platform: var(--net)">
+					<div class="card-head">
+						<h2>.net</h2>
+					</div>
+					<p class="state">Waiting</p>
+					<a class="link" hidden target="_blank" rel="noreferrer">Open</a>
+				</article>
+				<article class="card" data-check data-tld="org" data-status="idle" style="--platform: var(--org)">
+					<div class="card-head">
+						<h2>.org</h2>
+					</div>
+					<p class="state">Waiting</p>
+					<a class="link" hidden target="_blank" rel="noreferrer">Open</a>
+				</article>
+				<article class="card" data-check data-tld="io" data-status="idle" style="--platform: var(--io)">
+					<div class="card-head">
+						<h2>.io</h2>
+					</div>
+					<p class="state">Waiting</p>
+					<a class="link" hidden target="_blank" rel="noreferrer">Open</a>
+				</article>
+				<article class="card" data-check data-tld="ai" data-status="idle" style="--platform: var(--ai)">
+					<div class="card-head">
+						<h2>.ai</h2>
+					</div>
+					<p class="state">Waiting</p>
+					<a class="link" hidden target="_blank" rel="noreferrer">Open</a>
+				</article>
+			</section>
+
 			<p id="summary" class="summary" hidden></p>
 		</main>
 
 		<footer>
-			Public profile lookup. Confirm on the platform before you claim a name.
+			Public profile and RDAP lookup. Confirm before you claim a name.
 		</footer>
 	</div>
 </Layout>
@@ -164,6 +204,16 @@ import Layout from '../layouts/Layout.astro';
 		text-align: center;
 	}
 
+	.row-label {
+		width: min(920px, 100%);
+		margin: 22px 0 8px;
+		color: var(--muted);
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
+
 	#search {
 		width: min(560px, 100%);
 	}
@@ -230,7 +280,6 @@ import Layout from '../layouts/Layout.astro';
 		grid-template-columns: repeat(5, minmax(0, 1fr));
 		gap: 10px;
 		width: min(920px, 100%);
-		margin-top: 28px;
 	}
 
 	.card {
@@ -307,6 +356,12 @@ import Layout from '../layouts/Layout.astro';
 		margin: 0;
 		font-size: 13px;
 		font-weight: 700;
+	}
+
+	[data-tld] h2 {
+		font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", Consolas, monospace;
+		font-size: 16px;
+		letter-spacing: -0.02em;
 	}
 
 	.state {
@@ -414,7 +469,7 @@ import Layout from '../layouts/Layout.astro';
 	const form = formNode;
 	const input = inputNode;
 	const summary = summaryNode;
-	const cards = document.querySelectorAll('[data-platform]');
+	const cards = document.querySelectorAll('[data-check]');
 	let timer = 0;
 	let wave = 0;
 
@@ -469,9 +524,11 @@ import Layout from '../layouts/Layout.astro';
 		await Promise.all(
 			[...cards].map(async (card) => {
 				const platform = card.getAttribute('data-platform');
-				if (!platform) return;
+				const tld = card.getAttribute('data-tld');
+				const query = platform ? `platform=${platform}` : tld ? `tld=${tld}` : '';
+				if (!query) return;
 				try {
-					const res = await fetch(`/api/check?handle=${encodeURIComponent(handle)}&platform=${platform}`);
+					const res = await fetch(`/api/check?handle=${encodeURIComponent(handle)}&${query}`);
 					const data = await res.json();
 					if (id !== wave) return;
 					const result = data.results?.[0];
@@ -494,7 +551,8 @@ import Layout from '../layouts/Layout.astro';
 		if (link instanceof HTMLAnchorElement) {
 			const show = Boolean(url) && (status === 'taken' || status === 'unknown');
 			link.hidden = !show;
-			link.textContent = status === 'taken' ? 'View profile' : 'Open to confirm';
+			const domain = card.hasAttribute('data-tld');
+			link.textContent = status === 'taken' ? (domain ? 'Open site' : 'View profile') : 'Open to confirm';
 			if (url) link.href = url;
 		}
 	}
