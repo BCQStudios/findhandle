@@ -9,7 +9,6 @@
 		/>
 		<link rel="icon" href="/favicon.ico" sizes="48x48" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
 		<title>FindHandle</title>
 		<script is:inline>
 			if (localStorage.theme === 'light') document.documentElement.dataset.theme = 'light';
@@ -32,7 +31,6 @@
 		--taken: #ff2a2a;
 		--available: #17d36a;
 		--unknown: #d0d0d6;
-		--stroke: transparent;
 	}
 
 	html[data-theme='light'] {
@@ -42,20 +40,14 @@
 		--muted: #5c5c64;
 		--line: #d2d2d8;
 		--unknown: #3f3f46;
-		--stroke: #d2d2d8;
 	}
 
 	* {
 		box-sizing: border-box;
 	}
 
-	html,
 	body {
 		margin: 0;
-		min-height: 100%;
-	}
-
-	body {
 		background: var(--bg);
 		color: var(--fg);
 		font-family: "Segoe UI", Inter, ui-sans-serif, system-ui, sans-serif;

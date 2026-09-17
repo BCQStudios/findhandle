@@ -5,8 +5,8 @@ export const prerender = false;
 
 export const GET: APIRoute = async ({ url }) => {
 	const handle = (url.searchParams.get('handle') ?? '').trim().replace(/^@+/, '').toLowerCase();
-	const platform = url.searchParams.get('platform') ?? '';
-	const tld = url.searchParams.get('tld') ?? '';
+	const platform = url.searchParams.get('platform');
+	const tld = url.searchParams.get('tld');
 
 	const data = TLDS.includes(tld as Tld)
 		? await checkTld(handle, tld as Tld)

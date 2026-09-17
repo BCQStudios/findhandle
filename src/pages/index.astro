@@ -68,7 +68,7 @@ import Layout from '../layouts/Layout.astro';
 
 						<article class="row" data-platform="x">
 							<span class="logo" aria-hidden="true">
-								<svg viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.112656) translate(-12.035 -12)"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.425 6.231H2.72l7.662-8.57L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></g></svg>
+								<svg viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.112656) translate(-12.035 -12)"><path fill="var(--fg)" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.425 6.231H2.72l7.662-8.57L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></g></svg>
 							</span>
 							<h2>X</h2>
 							<a class="link" hidden target="_blank" rel="noreferrer">View</a>
@@ -241,7 +241,6 @@ import Layout from '../layouts/Layout.astro';
 		background: var(--bar);
 		color: var(--ink);
 		border-radius: 10px;
-		box-shadow: 0 0 0 1px var(--stroke);
 	}
 
 	.at {
@@ -288,6 +287,10 @@ import Layout from '../layouts/Layout.astro';
 
 	.bar button:hover {
 		background: color-mix(in srgb, var(--available) 80%, var(--ink));
+	}
+
+	:global(html[data-theme='light']) .bar {
+		box-shadow: 0 0 0 1px var(--line);
 	}
 
 	:global(html[data-theme='light']) .bar button {
@@ -363,10 +366,6 @@ import Layout from '../layouts/Layout.astro';
 		display: block;
 		width: 20px;
 		height: 20px;
-	}
-
-	[data-platform='x'] .logo {
-		color: var(--fg);
 	}
 
 	:global(html[data-theme='light']) [data-platform='tiktok'] path:not(:last-of-type) {
@@ -514,12 +513,12 @@ import Layout from '../layouts/Layout.astro';
 	let timer = 0;
 	let wave = 0;
 
-	const light = () => document.documentElement.dataset.theme === 'light';
-	themeBtn.setAttribute('aria-checked', String(light()));
+	themeBtn.setAttribute('aria-checked', String(document.documentElement.dataset.theme === 'light'));
 	themeBtn.addEventListener('click', () => {
-		document.documentElement.dataset.theme = light() ? 'dark' : 'light';
-		localStorage.theme = document.documentElement.dataset.theme;
-		themeBtn.setAttribute('aria-checked', String(light()));
+		const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+		document.documentElement.dataset.theme = next;
+		localStorage.theme = next;
+		themeBtn.setAttribute('aria-checked', String(next === 'light'));
 	});
 
 	form.addEventListener('submit', (event) => {
@@ -535,17 +534,13 @@ import Layout from '../layouts/Layout.astro';
 		window.clearTimeout(timer);
 		const handle = next.toLowerCase();
 		if (!handle) {
-			reset();
+			wave += 1;
+			for (const row of rows) paint(row, 'idle');
+			summary.hidden = true;
 			return;
 		}
 		timer = window.setTimeout(() => void run(handle), 400);
 	});
-
-	function reset() {
-		wave += 1;
-		for (const row of rows) paint(row, 'idle');
-		summary.hidden = true;
-	}
 
 	async function run(handle: string) {
 		const id = ++wave;
@@ -566,17 +561,14 @@ import Layout from '../layouts/Layout.astro';
 		if (id !== wave) return;
 
 		const counts = { available: 0, taken: 0, unknown: 0, invalid: 0 };
-		for (const row of rows) {
-			const status = row.getAttribute('data-status') as keyof typeof counts;
-			if (status in counts) counts[status] += 1;
-		}
+		for (const row of rows) counts[row.getAttribute('data-status') as keyof typeof counts] += 1;
 		summary.textContent = [
 			counts.available && `${counts.available} available`,
 			counts.taken && `${counts.taken} taken`,
 			counts.unknown && `${counts.unknown} unverified`,
 			counts.invalid && `${counts.invalid} invalid`,
 		].filter(Boolean).join(' · ');
-		summary.hidden = !summary.textContent;
+		summary.hidden = false;
 	}
 
 	function paint(row: Element, status: keyof typeof labels, url?: string) {
