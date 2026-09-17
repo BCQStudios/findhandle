@@ -194,21 +194,7 @@ import Layout from '../layouts/Layout.astro';
 		padding: 8px 16px 48px;
 	}
 
-	.kicker {
-		margin: 0 0 8px;
-		color: var(--muted);
-		font-size: 12px;
-		font-weight: 700;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
-	}
-
 	h1 {
-		margin: 0;
-		font-size: clamp(28px, 5vw, 40px);
-		font-weight: 700;
-		letter-spacing: -0.02em;
-		line-height: 1.1;
 		text-align: center;
 	}
 
@@ -524,7 +510,7 @@ import Layout from '../layouts/Layout.astro';
 	form.addEventListener('submit', (event) => {
 		event.preventDefault();
 		window.clearTimeout(timer);
-		const handle = input.value.toLowerCase();
+		const handle = input.value.replace(/^@+/, '').replace(/[^a-zA-Z0-9._-]/g, '').toLowerCase();
 		if (handle) void run(handle);
 	});
 
@@ -572,16 +558,16 @@ import Layout from '../layouts/Layout.astro';
 		summary.hidden = false;
 	}
 
-	function paint(row: Element, status: keyof typeof labels, url?: string) {
+	function paint(row: Element, status: keyof typeof labels, url = '') {
 		row.setAttribute('data-status', status);
 		row.querySelector('.state')!.textContent = labels[status];
 		const link = row.querySelector('.link') as HTMLAnchorElement;
-		const show = Boolean(url) && (status === 'taken' || status === 'unknown');
+		const show = (status === 'taken' || status === 'unknown') && url !== '';
 		link.hidden = !show;
 		if (!show) return;
 		link.textContent = status === 'taken'
 			? row.hasAttribute('data-tld') ? 'Open site' : 'View profile'
 			: 'Open to confirm';
-		link.href = url!;
+		link.href = url;
 	}
 </script>

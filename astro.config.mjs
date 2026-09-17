@@ -10,8 +10,7 @@ export default defineConfig({
 			hooks: {
 				'astro:server:setup'({ server }) {
 					server.middlewares.use(async (req, res, next) => {
-						const href = 'url' in req && typeof req.url === 'string' ? req.url : '/';
-						const url = new URL(href, 'http://dev.local');
+						const url = new URL(/** @type {{ url?: string }} */ (req).url ?? '/', 'http://dev.local');
 						if (url.pathname === '/api/search') {
 							res.statusCode = 204;
 							res.end();

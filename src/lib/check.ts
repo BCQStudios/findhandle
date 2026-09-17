@@ -1,8 +1,8 @@
-export const PLATFORMS = ['youtube', 'tiktok', 'x', 'facebook', 'instagram'] as const;
-export const TLDS = ['com', 'net', 'org', 'io', 'ai'] as const;
+const PLATFORMS = ['youtube', 'tiktok', 'x', 'facebook', 'instagram'] as const;
+const TLDS = ['com', 'net', 'org', 'io', 'ai'] as const;
 
-export type Platform = (typeof PLATFORMS)[number];
-export type Tld = (typeof TLDS)[number];
+type Platform = (typeof PLATFORMS)[number];
+type Tld = (typeof TLDS)[number];
 type Status = 'available' | 'taken' | 'invalid' | 'unknown';
 type Result = { status: Status; url: string };
 
@@ -36,52 +36,6 @@ const RDAP: Record<Tld, string> = {
 	io: 'https://rdap.identitydigital.services/rdap/domain',
 	ai: 'https://rdap.identitydigital.services/rdap/domain',
 };
-
-export async function checkTld(handle: string, tld: Tld): Promise<Result> {
-	const url = `https://${handle}.${tld}`;
-	if (!DOMAIN.test(handle)) return { status: 'invalid', url };
-
-	try {
-		const res = await load(`${RDAP[tld]}/${handle}.${tld}`, {
-			Accept: 'application/rdap+json, application/json',
-		});
-		if (res.status === 404) return { status: 'available', url };
-		if (res.status === 200) return { status: 'taken', url };
-		return { status: 'unknown', url };
-	} catch {
-		return { status: 'unknown', url };
-	}
-}
-
-export async function checkPlatform(handle: string, platform: Platform): Promise<Result> {
-	const url = PROFILES[platform](handle);
-	if (!RULES[platform].test(handle)) return { status: 'invalid', url };
-
-	try {
-		return { status: await CHECKERS[platform](handle), url };
-	} catch {
-		return { status: 'unknown', url };
-	}
-}
-
-export async function handleCheck(url: URL): Promise<Response> {
-	const handle = (url.searchParams.get('handle') ?? '').trim().replace(/^@+/, '').toLowerCase();
-	const platform = url.searchParams.get('platform');
-	const tld = url.searchParams.get('tld');
-
-	const data = TLDS.includes(tld as Tld)
-		? await checkTld(handle, tld as Tld)
-		: PLATFORMS.includes(platform as Platform)
-			? await checkPlatform(handle, platform as Platform)
-			: { status: 'unknown', url: '' };
-
-	return new Response(JSON.stringify(data), {
-		headers: {
-			'Content-Type': 'application/json',
-			'Cache-Control': 'no-store',
-		},
-	});
-}
 
 async function load(url: string, headers: Record<string, string> = {}) {
 	return fetch(url, {
@@ -142,3 +96,48 @@ const CHECKERS: Record<Platform, (handle: string) => Promise<Status>> = {
 		return 'unknown';
 	},
 };
+
+export async function handleCheck(url: URL): Promise<Response> {
+	const handle = (url.searchParams.get('handle') ?? '').trim().replace(/^@+/, '').toLowerCase();
+	const platform = url.searchParams.get('platform');
+	const tld = url.searchParams.get('tld');
+
+	let data: Result = { status: 'unknown', url: '' };
+
+	if (TLDS.includes(tld as Tld)) {
+		const page = `https://${handle}.${tld}`;
+		if (!DOMAIN.test(handle)) {
+			data = { status: 'invalid', url: page };
+		} else {
+			try {
+				const res = await load(`${RDAP[tld as Tld]}/${handle}.${tld}`, {
+					Accept: 'application/rdap+json, application/json',
+				});
+				data = {
+					status: res.status === 404 ? 'available' : res.status === 200 ? 'taken' : 'unknown',
+					url: page,
+				};
+			} catch {
+				data = { status: 'unknown', url: page };
+			}
+		}
+	} else if (PLATFORMS.includes(platform as Platform)) {
+		const page = PROFILES[platform as Platform](handle);
+		if (!RULES[platform as Platform].test(handle)) {
+			data = { status: 'invalid', url: page };
+		} else {
+			try {
+				data = { status: await CHECKERS[platform as Platform](handle), url: page };
+			} catch {
+				data = { status: 'unknown', url: page };
+			}
+		}
+	}
+
+	return new Response(JSON.stringify(data), {
+		headers: {
+			'Content-Type': 'application/json',
+			'Cache-Control': 'no-store',
+		},
+	});
+}
