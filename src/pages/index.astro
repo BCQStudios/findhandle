@@ -546,6 +546,7 @@ import Layout from '../layouts/Layout.astro';
 		const id = ++wave;
 		for (const row of rows) paint(row, 'checking');
 		summary.hidden = true;
+		void fetch(`/api/search?handle=${encodeURIComponent(handle)}`);
 
 		await Promise.all([...rows].map(async (row) => {
 			const platform = row.getAttribute('data-platform');

@@ -12,6 +12,12 @@ export default defineConfig({
 					server.middlewares.use(async (req, res, next) => {
 						const href = 'url' in req && typeof req.url === 'string' ? req.url : '/';
 						const url = new URL(href, 'http://dev.local');
+						if (url.pathname === '/api/search') {
+							res.statusCode = 204;
+							res.end();
+							return;
+						}
+
 						if (url.pathname !== '/api/check') {
 							next();
 							return;

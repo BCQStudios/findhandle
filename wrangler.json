@@ -7,6 +7,9 @@
 		"not_found_handling": "404-page",
 		"run_worker_first": ["/api/*"]
 	},
+	"analytics_engine_datasets": [
+		{ "binding": "SEARCHES", "dataset": "searches" }
+	],
 	"routes": [
 		{ "pattern": "www.findhandle.com", "custom_domain": true }
 	]
