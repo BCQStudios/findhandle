@@ -16,14 +16,12 @@ import Layout from '../layouts/Layout.astro';
 			<h1>See if a name is free</h1>
 			<p class="lede">Matching handles. A brand you can hold.</p>
 
-			<form id="search" autocomplete="off" spellcheck="false">
+			<form autocomplete="off" spellcheck="false">
 				<label class="bar">
 					<span class="at" aria-hidden="true">@</span>
 					<input
 						id="handle"
-						name="handle"
 						type="text"
-						inputmode="text"
 						autocapitalize="none"
 						autocorrect="off"
 						maxlength="30"
@@ -35,21 +33,21 @@ import Layout from '../layouts/Layout.astro';
 			</form>
 
 			<div class="boards">
-				<section class="board">
+				<section>
 					<p class="row-label">Social</p>
-					<div class="results" aria-live="polite">
-						<article class="card" data-platform="youtube">
+					<div aria-live="polite">
+						<article class="row" data-platform="youtube">
 							<span class="logo" aria-hidden="true">
-								<svg viewBox="0 0 24 24" width="20" height="20"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+								<svg viewBox="0 0 24 24"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
 							</span>
 							<h2>YouTube</h2>
 							<a class="link" hidden target="_blank" rel="noreferrer">View</a>
 							<p class="state">Waiting</p>
 						</article>
 
-						<article class="card" data-platform="tiktok">
+						<article class="row" data-platform="tiktok">
 							<span class="logo" aria-hidden="true">
-								<svg viewBox="0 0 24 24" width="20" height="20">
+								<svg viewBox="0 0 24 24">
 									<g transform="translate(12 12) scale(0.987654) translate(-11.995 -12)">
 										<path fill="#25F4EE" transform="translate(-1.05 .15)" d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
 										<path fill="#FE2C55" transform="translate(1.05 -.15)" d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
@@ -62,27 +60,27 @@ import Layout from '../layouts/Layout.astro';
 							<p class="state">Waiting</p>
 						</article>
 
-						<article class="card" data-platform="x">
+						<article class="row" data-platform="x">
 							<span class="logo" aria-hidden="true">
-								<svg viewBox="0 0 24 24" width="20" height="20"><g transform="translate(12 12) scale(1.112656) translate(-12.035 -12)"><path fill="#fff" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.425 6.231H2.72l7.662-8.57L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></g></svg>
+								<svg viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.112656) translate(-12.035 -12)"><path fill="#fff" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.425 6.231H2.72l7.662-8.57L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></g></svg>
 							</span>
 							<h2>X</h2>
 							<a class="link" hidden target="_blank" rel="noreferrer">View</a>
 							<p class="state">Waiting</p>
 						</article>
 
-						<article class="card" data-platform="facebook">
+						<article class="row" data-platform="facebook">
 							<span class="logo" aria-hidden="true">
-								<svg viewBox="0 0 24 24" width="20" height="20"><path fill="#1877F2" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+								<svg viewBox="0 0 24 24"><path fill="#1877F2" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
 							</span>
 							<h2>Facebook</h2>
 							<a class="link" hidden target="_blank" rel="noreferrer">View</a>
 							<p class="state">Waiting</p>
 						</article>
 
-						<article class="card" data-platform="instagram">
+						<article class="row" data-platform="instagram">
 							<span class="logo" aria-hidden="true">
-								<svg viewBox="0 0 24 24" width="20" height="20">
+								<svg viewBox="0 0 24 24">
 									<defs>
 										<radialGradient id="ig" cx="30%" cy="107%" r="150%">
 											<stop offset="0%" stop-color="#fdf497"/>
@@ -101,30 +99,30 @@ import Layout from '../layouts/Layout.astro';
 					</div>
 				</section>
 
-				<section class="board">
+				<section>
 					<p class="row-label">Domains</p>
-					<div class="results" aria-live="polite">
-						<article class="card" data-tld="com">
+					<div aria-live="polite">
+						<article class="row" data-tld="com">
 							<h2>.com</h2>
 							<a class="link" hidden target="_blank" rel="noreferrer">Open</a>
 							<p class="state">Waiting</p>
 						</article>
-						<article class="card" data-tld="net">
+						<article class="row" data-tld="net">
 							<h2>.net</h2>
 							<a class="link" hidden target="_blank" rel="noreferrer">Open</a>
 							<p class="state">Waiting</p>
 						</article>
-						<article class="card" data-tld="org">
+						<article class="row" data-tld="org">
 							<h2>.org</h2>
 							<a class="link" hidden target="_blank" rel="noreferrer">Open</a>
 							<p class="state">Waiting</p>
 						</article>
-						<article class="card" data-tld="io">
+						<article class="row" data-tld="io">
 							<h2>.io</h2>
 							<a class="link" hidden target="_blank" rel="noreferrer">Open</a>
 							<p class="state">Waiting</p>
 						</article>
-						<article class="card" data-tld="ai">
+						<article class="row" data-tld="ai">
 							<h2>.ai</h2>
 							<a class="link" hidden target="_blank" rel="noreferrer">Open</a>
 							<p class="state">Waiting</p>
@@ -133,7 +131,7 @@ import Layout from '../layouts/Layout.astro';
 				</section>
 			</div>
 
-			<p id="summary" class="summary" hidden></p>
+			<p id="summary" hidden></p>
 		</main>
 
 		<footer>
@@ -217,7 +215,7 @@ import Layout from '../layouts/Layout.astro';
 		text-transform: uppercase;
 	}
 
-	#search {
+	form {
 		width: min(560px, 100%);
 	}
 
@@ -286,12 +284,7 @@ import Layout from '../layouts/Layout.astro';
 		margin-top: 28px;
 	}
 
-	.results {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.card {
+	.row {
 		display: flex;
 		align-items: center;
 		gap: 10px;
@@ -300,17 +293,13 @@ import Layout from '../layouts/Layout.astro';
 		border-bottom: 1px solid var(--line);
 	}
 
-	.card:last-child {
+	.row:last-child {
 		border-bottom: 0;
 	}
 
 	.logo {
-		display: grid;
-		place-items: center;
 		flex: 0 0 20px;
-		width: 20px;
 		height: 20px;
-		overflow: hidden;
 	}
 
 	.logo svg {
@@ -341,20 +330,20 @@ import Layout from '../layouts/Layout.astro';
 		color: var(--muted);
 	}
 
-	.card[data-status='checking'] .state {
+	.row[data-status='checking'] .state {
 		animation: pulse 0.9s ease-in-out infinite;
 	}
 
-	.card[data-status='available'] .state {
+	.row[data-status='available'] .state {
 		color: var(--available);
 	}
 
-	.card[data-status='taken'] .state {
+	.row[data-status='taken'] .state {
 		color: var(--taken);
 	}
 
-	.card[data-status='unknown'] .state,
-	.card[data-status='invalid'] .state {
+	.row[data-status='unknown'] .state,
+	.row[data-status='invalid'] .state {
 		color: var(--unknown);
 	}
 
@@ -370,7 +359,7 @@ import Layout from '../layouts/Layout.astro';
 		text-decoration: underline;
 	}
 
-	.summary {
+	#summary {
 		margin: 18px 0 0;
 		color: var(--muted);
 		font-size: 13px;
@@ -426,7 +415,7 @@ import Layout from '../layouts/Layout.astro';
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.card[data-status='checking'] .state {
+		.row[data-status='checking'] .state {
 			animation: none;
 			opacity: 0.7;
 		}
@@ -443,85 +432,79 @@ import Layout from '../layouts/Layout.astro';
 		unknown: 'Unverified',
 	};
 
-	const form = document.querySelector('#search') as HTMLFormElement;
+	const form = document.querySelector('form') as HTMLFormElement;
 	const input = document.querySelector('#handle') as HTMLInputElement;
 	const summary = document.querySelector('#summary') as HTMLElement;
-	const cards = document.querySelectorAll('.card');
+	const rows = document.querySelectorAll('.row');
 	let timer = 0;
 	let wave = 0;
 
 	form.addEventListener('submit', (event) => {
 		event.preventDefault();
 		window.clearTimeout(timer);
-		const handle = input.value.trim().replace(/^@+/, '').toLowerCase();
+		const handle = input.value.toLowerCase();
 		if (handle) void run(handle);
-		else reset();
 	});
 
 	input.addEventListener('input', () => {
 		const next = input.value.replace(/^@+/, '').replace(/[^a-zA-Z0-9._-]/g, '');
 		if (next !== input.value) input.value = next;
 		window.clearTimeout(timer);
-		const handle = next.trim().toLowerCase();
+		const handle = next.toLowerCase();
 		if (!handle) {
 			reset();
 			return;
 		}
-		timer = window.setTimeout(() => {
-			void run(handle);
-		}, 400);
+		timer = window.setTimeout(() => void run(handle), 400);
 	});
 
 	function reset() {
 		wave += 1;
-		for (const card of cards) paint(card, 'idle');
+		for (const row of rows) paint(row, 'idle');
 		summary.hidden = true;
-		summary.textContent = '';
 	}
 
 	async function run(handle: string) {
 		const id = ++wave;
-		for (const card of cards) paint(card, 'checking');
+		for (const row of rows) paint(row, 'checking');
 		summary.hidden = true;
 
-		await Promise.all([...cards].map(async (card) => {
-			const platform = card.getAttribute('data-platform');
-			const query = platform ? `platform=${platform}` : `tld=${card.getAttribute('data-tld')}`;
+		await Promise.all([...rows].map(async (row) => {
+			const platform = row.getAttribute('data-platform');
+			const query = platform ? `platform=${platform}` : `tld=${row.getAttribute('data-tld')}`;
 			try {
 				const data = await (await fetch(`/api/check?handle=${encodeURIComponent(handle)}&${query}`)).json();
-				if (id !== wave) return;
-				paint(card, data.status ?? 'unknown', data.url);
+				if (id === wave) paint(row, data.status, data.url);
 			} catch {
-				if (id !== wave) return;
-				paint(card, 'unknown');
+				if (id === wave) paint(row, 'unknown');
 			}
 		}));
 
 		if (id !== wave) return;
 
 		const counts = { available: 0, taken: 0, unknown: 0, invalid: 0 };
-		for (const card of cards) {
-			const status = card.getAttribute('data-status');
-			if (status && status in counts) counts[status as keyof typeof counts] += 1;
+		for (const row of rows) {
+			const status = row.getAttribute('data-status') as keyof typeof counts;
+			if (status in counts) counts[status] += 1;
 		}
-		const parts = [];
-		if (counts.available) parts.push(`${counts.available} available`);
-		if (counts.taken) parts.push(`${counts.taken} taken`);
-		if (counts.unknown) parts.push(`${counts.unknown} unverified`);
-		if (counts.invalid) parts.push(`${counts.invalid} invalid`);
-		summary.textContent = parts.join(' · ');
-		summary.hidden = parts.length === 0;
+		summary.textContent = [
+			counts.available && `${counts.available} available`,
+			counts.taken && `${counts.taken} taken`,
+			counts.unknown && `${counts.unknown} unverified`,
+			counts.invalid && `${counts.invalid} invalid`,
+		].filter(Boolean).join(' · ');
+		summary.hidden = !summary.textContent;
 	}
 
-	function paint(card: Element, status: keyof typeof labels, url?: string) {
-		card.setAttribute('data-status', status);
-		card.querySelector('.state')!.textContent = labels[status];
-		const link = card.querySelector('.link') as HTMLAnchorElement;
+	function paint(row: Element, status: keyof typeof labels, url?: string) {
+		row.setAttribute('data-status', status);
+		row.querySelector('.state')!.textContent = labels[status];
+		const link = row.querySelector('.link') as HTMLAnchorElement;
 		const show = Boolean(url) && (status === 'taken' || status === 'unknown');
 		link.hidden = !show;
 		if (!show) return;
 		link.textContent = status === 'taken'
-			? card.hasAttribute('data-tld') ? 'Open site' : 'View profile'
+			? row.hasAttribute('data-tld') ? 'Open site' : 'View profile'
 			: 'Open to confirm';
 		link.href = url!;
 	}

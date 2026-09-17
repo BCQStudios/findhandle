@@ -1,23 +1,17 @@
-const PLATFORM_IDS = ['youtube', 'tiktok', 'x', 'facebook', 'instagram'] as const;
-const TLD_IDS = ['com', 'net', 'org', 'io', 'ai'] as const;
+export const PLATFORMS = ['youtube', 'tiktok', 'x', 'facebook', 'instagram'] as const;
+export const TLDS = ['com', 'net', 'org', 'io', 'ai'] as const;
 
-type PlatformId = (typeof PLATFORM_IDS)[number];
-type TldId = (typeof TLD_IDS)[number];
-type CheckStatus = 'available' | 'taken' | 'invalid' | 'unknown';
-
-type CheckResult = {
-	platform?: PlatformId;
-	tld?: TldId;
-	status: CheckStatus;
-	url: string;
-};
+export type Platform = (typeof PLATFORMS)[number];
+export type Tld = (typeof TLDS)[number];
+type Status = 'available' | 'taken' | 'invalid' | 'unknown';
+type Result = { status: Status; url: string };
 
 const UA =
 	'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
 const IG_UA =
 	'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1';
 
-const RULES: Record<PlatformId, RegExp> = {
+const RULES: Record<Platform, RegExp> = {
 	youtube: /^[a-z0-9._-]{3,30}$/,
 	tiktok: /^[a-z0-9._]{2,24}$/,
 	x: /^[a-z0-9_]{1,15}$/,
@@ -25,7 +19,7 @@ const RULES: Record<PlatformId, RegExp> = {
 	instagram: /^(?!.*\.\.)(?!\.)[a-z0-9._]{1,30}(?<!\.)$/,
 };
 
-const PROFILES: Record<PlatformId, (handle: string) => string> = {
+const PROFILES: Record<Platform, (handle: string) => string> = {
 	youtube: (handle) => `https://www.youtube.com/@${handle}`,
 	tiktok: (handle) => `https://www.tiktok.com/@${handle}`,
 	x: (handle) => `https://x.com/${handle}`,
@@ -33,58 +27,45 @@ const PROFILES: Record<PlatformId, (handle: string) => string> = {
 	instagram: (handle) => `https://www.instagram.com/${handle}/`,
 };
 
-const DOMAIN_RULE = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
+const DOMAIN = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
 
-const RDAP: Record<TldId, (name: string) => string> = {
-	com: (name) => `https://rdap.verisign.com/com/v1/domain/${name}.com`,
-	net: (name) => `https://rdap.verisign.com/net/v1/domain/${name}.net`,
-	org: (name) => `https://rdap.publicinterestregistry.org/rdap/domain/${name}.org`,
-	io: (name) => `https://rdap.identitydigital.services/rdap/domain/${name}.io`,
-	ai: (name) => `https://rdap.identitydigital.services/rdap/domain/${name}.ai`,
+const RDAP: Record<Tld, string> = {
+	com: 'https://rdap.verisign.com/com/v1/domain',
+	net: 'https://rdap.verisign.com/net/v1/domain',
+	org: 'https://rdap.publicinterestregistry.org/rdap/domain',
+	io: 'https://rdap.identitydigital.services/rdap/domain',
+	ai: 'https://rdap.identitydigital.services/rdap/domain',
 };
 
-export function isPlatformId(value: string): value is PlatformId {
-	return PLATFORM_IDS.includes(value as PlatformId);
-}
-
-export function isTldId(value: string): value is TldId {
-	return TLD_IDS.includes(value as TldId);
-}
-
-export async function checkTld(handle: string, tld: TldId): Promise<CheckResult> {
+export async function checkTld(handle: string, tld: Tld): Promise<Result> {
 	const url = `https://${handle}.${tld}`;
-	if (!DOMAIN_RULE.test(handle)) {
-		return { tld, status: 'invalid', url };
-	}
+	if (!DOMAIN.test(handle)) return { status: 'invalid', url };
 
 	try {
-		const page = await load(RDAP[tld](handle), {
+		const res = await load(`${RDAP[tld]}/${handle}.${tld}`, {
 			Accept: 'application/rdap+json, application/json',
 		});
-		if (page.status === 404) return { tld, status: 'available', url };
-		if (page.status === 200) return { tld, status: 'taken', url };
-		return { tld, status: 'unknown', url };
+		if (res.status === 404) return { status: 'available', url };
+		if (res.status === 200) return { status: 'taken', url };
+		return { status: 'unknown', url };
 	} catch {
-		return { tld, status: 'unknown', url };
+		return { status: 'unknown', url };
 	}
 }
 
-export async function checkPlatform(handle: string, platform: PlatformId): Promise<CheckResult> {
+export async function checkPlatform(handle: string, platform: Platform): Promise<Result> {
 	const url = PROFILES[platform](handle);
-	if (!RULES[platform].test(handle)) {
-		return { platform, status: 'invalid', url };
-	}
+	if (!RULES[platform].test(handle)) return { status: 'invalid', url };
 
 	try {
-		const status = await CHECKERS[platform](handle);
-		return { platform, status, url };
+		return { status: await CHECKERS[platform](handle), url };
 	} catch {
-		return { platform, status: 'unknown', url };
+		return { status: 'unknown', url };
 	}
 }
 
 async function load(url: string, headers: Record<string, string> = {}) {
-	const res = await fetch(url, {
+	return fetch(url, {
 		headers: {
 			'User-Agent': UA,
 			'Accept-Language': 'en-US,en;q=0.9',
@@ -93,16 +74,16 @@ async function load(url: string, headers: Record<string, string> = {}) {
 		},
 		signal: AbortSignal.timeout(8000),
 	});
-	return { status: res.status, text: await res.text() };
 }
 
-const CHECKERS: Record<PlatformId, (handle: string) => Promise<CheckStatus>> = {
+const CHECKERS: Record<Platform, (handle: string) => Promise<Status>> = {
 	async youtube(handle) {
-		const page = await load(PROFILES.youtube(handle), {
+		const res = await load(PROFILES.youtube(handle), {
 			Cookie: 'CONSENT=YES+; SOCS=CAISNQgDEitib3FfaWRlbnRpdHlmcm9udGVuZHVpc2VydmVyXzIwMjUwOTEyLjA4X3AxGgJlbiACGgYIgPz8mgY',
 		});
-		if (page.status === 404 || page.text.includes("This page isn't available")) return 'available';
-		if (page.text.includes('channelMetadataRenderer')) return 'taken';
+		const text = await res.text();
+		if (res.status === 404 || text.includes("This page isn't available")) return 'available';
+		if (text.includes('channelMetadataRenderer')) return 'taken';
 		return 'unknown';
 	},
 
@@ -111,11 +92,9 @@ const CHECKERS: Record<PlatformId, (handle: string) => Promise<CheckStatus>> = {
 		if (embed.status === 200) return 'taken';
 		if (embed.status === 400 || embed.status === 404) return 'available';
 
-		const page = await load(PROFILES.tiktok(handle));
-		if (page.text.includes(`"uniqueId":"${handle}"`)) return 'taken';
-		if (page.text.includes('"statusCode":10221') || page.text.includes("Couldn't find this account")) {
-			return 'available';
-		}
+		const text = await (await load(PROFILES.tiktok(handle))).text();
+		if (text.includes(`"uniqueId":"${handle}"`)) return 'taken';
+		if (text.includes('"statusCode":10221') || text.includes("Couldn't find this account")) return 'available';
 		return 'unknown';
 	},
 
@@ -127,22 +106,20 @@ const CHECKERS: Record<PlatformId, (handle: string) => Promise<CheckStatus>> = {
 	},
 
 	async facebook(handle) {
-		const href = encodeURIComponent(PROFILES.facebook(handle));
 		const page = await load(
-			`https://www.facebook.com/plugins/page.php?href=${href}&tabs&width=340&height=130`,
+			`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(PROFILES.facebook(handle))}&tabs&width=340&height=130`,
 		);
-		if (page.text.includes('Follow') || page.text.includes('Verified Page') || page.text.length > 35000) {
-			return 'taken';
-		}
+		const text = await page.text();
+		if (text.includes('Follow') || text.includes('Verified Page') || text.length > 35000) return 'taken';
 		if (page.status === 200) return 'available';
 		return 'unknown';
 	},
 
 	async instagram(handle) {
-		const page = await load(PROFILES.instagram(handle), { 'User-Agent': IG_UA });
-		if (page.status === 404 || page.text.includes("Sorry, this page isn't available")) return 'available';
-		if (page.text.includes('profilePage_')) return 'taken';
-		if (page.status === 200) return 'available';
+		const res = await load(PROFILES.instagram(handle), { 'User-Agent': IG_UA });
+		const text = await res.text();
+		if (res.status === 404 || text.includes("Sorry, this page isn't available")) return 'available';
+		if (text.includes('profilePage_')) return 'taken';
 		return 'unknown';
 	},
 };
