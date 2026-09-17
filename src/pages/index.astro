@@ -142,6 +142,9 @@ import Layout from '../layouts/Layout.astro';
 
 		<footer>
 			Public profile and RDAP lookup. Confirm before you claim a name.
+			<p class="credit">
+				<a href="https://bcqstudios.com" target="_blank" rel="noreferrer">Made with <span class="heart">&lt;3</span> by BCQStudios</a>
+			</p>
 		</footer>
 	</div>
 </Layout>
@@ -418,6 +421,23 @@ import Layout from '../layouts/Layout.astro';
 		color: #6d6d75;
 		font-size: 12px;
 		text-align: center;
+	}
+
+	.credit {
+		margin: 8px 0 0;
+	}
+
+	.credit a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.credit a:hover {
+		text-decoration: underline;
+	}
+
+	.heart {
+		color: var(--taken);
 	}
 
 	@keyframes sweep {
