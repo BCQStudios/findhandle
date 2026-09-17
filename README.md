@@ -1,6 +1,8 @@
 # FindHandle
 
-Check if a name is free on the main social platforms and top-level domains.
+See if your next handle is still up for grabs.
+
+Live at [https://www.findhandle.com](https://www.findhandle.com).
 
 ## Commands
 
