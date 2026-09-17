@@ -4,28 +4,23 @@
   "version": "0.0.1",
   "private": true,
   "engines": {
-    "node": ">=22.12.0",
-    "npm": ">=9.6.5"
+    "node": ">=22.12.0"
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro build",
     "preview": "astro preview",
-    "deploy": "astro build && wrangler deploy --config dist/server/wrangler.json",
     "check": "astro check",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.10",
-    "@astrojs/cloudflare": "^14.3.2",
-    "astro": "^7.3.3",
-    "typescript": "^6.0.3"
+    "astro": "^7.3.3"
   },
   "allowScripts": {
-    "esbuild": true,
-    "workerd@1.20260916.1": true
+    "esbuild": true
   },
   "devDependencies": {
-    "wrangler": "^4.133.0"
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3"
   }
 }
