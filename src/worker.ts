@@ -9,7 +9,7 @@ export default {
 		const handle = (url.searchParams.get('handle') ?? '').trim().replace(/^@+/, '').toLowerCase();
 		if (handle) {
 			const country = (request as { cf?: { country?: string } }).cf?.country ?? 'unknown';
-			console.log({ event: 'search', handle, country });
+			console.log(handle, { event: 'search', country });
 		}
 
 		return new Response(null, { status: 204 });
