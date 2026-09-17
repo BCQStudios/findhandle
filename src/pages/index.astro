@@ -1,11 +1,516 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-	<Welcome />
+	<div class="page">
+		<header class="top">
+			<a class="brand" href="/">
+				<span class="mark" aria-hidden="true"></span>
+				findhandle
+			</a>
+		</header>
+
+		<main>
+			<p class="kicker">Handle check</p>
+			<h1>See if a name is free</h1>
+			<p class="lede">YouTube, TikTok, X, Facebook, and Instagram.</p>
+
+			<form id="search" autocomplete="off" spellcheck="false">
+				<label class="bar">
+					<span class="at" aria-hidden="true">@</span>
+					<input
+						id="handle"
+						name="handle"
+						type="text"
+						inputmode="text"
+						autocapitalize="none"
+						autocorrect="off"
+						maxlength="30"
+						placeholder="yourhandle"
+						aria-label="Social handle"
+					/>
+					<button type="submit">Check</button>
+				</label>
+			</form>
+
+			<section class="results" aria-live="polite">
+				<article class="card" data-platform="youtube" data-status="idle" style="--platform: var(--youtube)">
+					<div class="card-head">
+						<span class="icon" aria-hidden="true">
+							<svg viewBox="0 0 24 24"><rect x="1" y="5" width="22" height="14" rx="4" fill="currentColor"></rect><path d="M10 9.2l5.2 2.8-5.2 2.8z" fill="#070708"></path></svg>
+						</span>
+						<h2>YouTube</h2>
+					</div>
+					<p class="state">Waiting</p>
+					<a class="link" hidden target="_blank" rel="noreferrer">View</a>
+				</article>
+
+				<article class="card" data-platform="tiktok" data-status="idle" style="--platform: var(--tiktok)">
+					<div class="card-head">
+						<span class="icon tiktok" aria-hidden="true">
+							<svg viewBox="0 0 24 24"><path d="M14.2 3v10.1a3.4 3.4 0 1 1-2.4-3.2V7.3A6.2 6.2 0 1 0 17 13.2V8.4c1.1.8 2.5 1.3 4 1.4V6.6c-2.5-.2-4.5-1.8-5.2-3.6h-1.6z" fill="currentColor"></path></svg>
+						</span>
+						<h2>TikTok</h2>
+					</div>
+					<p class="state">Waiting</p>
+					<a class="link" hidden target="_blank" rel="noreferrer">View</a>
+				</article>
+
+				<article class="card" data-platform="x" data-status="idle" style="--platform: var(--x)">
+					<div class="card-head">
+						<span class="icon x" aria-hidden="true">
+							<svg viewBox="0 0 24 24"><path d="M14.7 10.3L22 2h-2.2l-6.1 6.9L8.7 2H2l7.8 11.1L2 22h2.2l6.8-7.7L15.3 22H22l-7.3-11.7zM11.8 13l-.8-1.1L4.9 3.5h2.7l5.1 7.2.8 1.1 6.7 9.5h-2.7L11.8 13z" fill="currentColor"></path></svg>
+						</span>
+						<h2>X</h2>
+					</div>
+					<p class="state">Waiting</p>
+					<a class="link" hidden target="_blank" rel="noreferrer">View</a>
+				</article>
+
+				<article class="card" data-platform="facebook" data-status="idle" style="--platform: var(--facebook)">
+					<div class="card-head">
+						<span class="icon" aria-hidden="true">
+							<svg viewBox="0 0 24 24"><path d="M14.8 22v-8.2h2.8l.4-3.3h-3.2V8.5c0-1 .3-1.6 1.7-1.6H18V4c-.3 0-1.4-.1-2.6-.1-2.6 0-4.4 1.6-4.4 4.5v2.1H8.1v3.3h2.9V22h3.8z" fill="currentColor"></path></svg>
+						</span>
+						<h2>Facebook</h2>
+					</div>
+					<p class="state">Waiting</p>
+					<a class="link" hidden target="_blank" rel="noreferrer">View</a>
+				</article>
+
+				<article class="card" data-platform="instagram" data-status="idle" style="--platform: var(--instagram)">
+					<div class="card-head">
+						<span class="icon" aria-hidden="true">
+							<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"></rect><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"></circle><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"></circle></svg>
+						</span>
+						<h2>Instagram</h2>
+					</div>
+					<p class="state">Waiting</p>
+					<a class="link" hidden target="_blank" rel="noreferrer">View</a>
+				</article>
+			</section>
+
+			<p id="summary" class="summary" hidden></p>
+		</main>
+
+		<footer>
+			Public profile lookup. Confirm on the platform before you claim a name.
+		</footer>
+	</div>
 </Layout>
+
+<style>
+	.page {
+		min-height: 100dvh;
+		display: grid;
+		grid-template-rows: auto 1fr auto;
+	}
+
+	.top {
+		padding: 20px 24px;
+	}
+
+	.brand {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		color: var(--fg);
+		text-decoration: none;
+		font-size: 15px;
+		font-weight: 700;
+		letter-spacing: -0.01em;
+	}
+
+	.mark {
+		width: 14px;
+		height: 14px;
+		border: 2px solid #fff;
+		border-radius: 99px;
+		box-shadow: 4px 4px 0 0 var(--available);
+	}
+
+	main {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		justify-content: safe center;
+		padding: 8px 16px 48px;
+	}
+
+	.kicker {
+		margin: 0 0 8px;
+		color: var(--muted);
+		font-size: 12px;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		margin: 0;
+		font-size: clamp(28px, 5vw, 40px);
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		line-height: 1.1;
+		text-align: center;
+	}
+
+	.lede {
+		margin: 10px 0 28px;
+		color: var(--muted);
+		font-size: 15px;
+		text-align: center;
+	}
+
+	#search {
+		width: min(560px, 100%);
+	}
+
+	.bar {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		height: 58px;
+		padding: 6px 6px 6px 16px;
+		background: var(--bar);
+		color: var(--ink);
+		border-radius: 10px;
+	}
+
+	.at {
+		color: #6b6b73;
+		font-size: 22px;
+		font-weight: 700;
+		line-height: 1;
+	}
+
+	#handle {
+		flex: 1;
+		min-width: 0;
+		height: 100%;
+		border: 0;
+		background: transparent;
+		color: var(--ink);
+		font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", Consolas, monospace;
+		font-size: 18px;
+		letter-spacing: -0.02em;
+		outline: none;
+	}
+
+	#handle::placeholder {
+		color: #8b8b93;
+	}
+
+	.bar:focus-within {
+		outline: 2px solid var(--fg);
+		outline-offset: 3px;
+	}
+
+	button {
+		height: 46px;
+		min-width: 96px;
+		padding: 0 18px;
+		border: 0;
+		border-radius: 8px;
+		background: var(--ink);
+		color: var(--bar);
+		font-size: 14px;
+		font-weight: 700;
+		cursor: pointer;
+	}
+
+	button:hover {
+		background: #1d1d22;
+	}
+
+	.results {
+		display: grid;
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+		gap: 10px;
+		width: min(920px, 100%);
+		margin-top: 28px;
+	}
+
+	.card {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		min-height: 132px;
+		padding: 14px;
+		overflow: hidden;
+		background: var(--card);
+		border: 1px solid var(--line);
+		border-radius: 10px;
+	}
+
+	.card::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: 0;
+		height: 3px;
+		background: var(--platform);
+	}
+
+	.card[data-status='checking']::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 36%;
+		height: 3px;
+		background: #fff;
+		animation: sweep 0.9s linear infinite;
+	}
+
+	.card[data-status='available'] {
+		border-color: color-mix(in srgb, var(--available) 55%, var(--line));
+	}
+
+	.card[data-status='taken'] {
+		border-color: color-mix(in srgb, var(--taken) 55%, var(--line));
+	}
+
+	.card-head {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.icon {
+		display: grid;
+		width: 22px;
+		height: 22px;
+		color: var(--platform);
+	}
+
+	.icon.tiktok {
+		background: var(--tiktok-cyan);
+		border-radius: 6px;
+		color: #111;
+		padding: 2px;
+	}
+
+	.icon.x {
+		color: var(--x);
+	}
+
+	.icon svg {
+		width: 100%;
+		height: 100%;
+	}
+
+	h2 {
+		margin: 0;
+		font-size: 13px;
+		font-weight: 700;
+	}
+
+	.state {
+		margin: 18px 0 0;
+		font-size: 18px;
+		font-weight: 700;
+		letter-spacing: -0.01em;
+		color: var(--muted);
+	}
+
+	.card[data-status='available'] .state {
+		color: var(--available);
+	}
+
+	.card[data-status='taken'] .state {
+		color: var(--taken);
+	}
+
+	.card[data-status='unknown'] .state,
+	.card[data-status='invalid'] .state {
+		color: var(--unknown);
+	}
+
+	.link {
+		margin-top: auto;
+		padding-top: 12px;
+		color: var(--fg);
+		font-size: 12px;
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	.link:hover {
+		text-decoration: underline;
+	}
+
+	.summary {
+		margin: 18px 0 0;
+		color: var(--muted);
+		font-size: 13px;
+	}
+
+	footer {
+		padding: 0 24px 24px;
+		color: #6d6d75;
+		font-size: 12px;
+		text-align: center;
+	}
+
+	@keyframes sweep {
+		from { transform: translateX(-120%); }
+		to { transform: translateX(320%); }
+	}
+
+	@media (max-width: 860px) {
+		.results {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 520px) {
+		.top {
+			padding: 16px;
+		}
+
+		.bar {
+			height: 54px;
+		}
+
+		.results {
+			grid-template-columns: 1fr;
+		}
+
+		button {
+			padding: 0 14px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.card[data-status='checking']::after {
+			animation: none;
+			width: 100%;
+			opacity: 0.45;
+		}
+	}
+</style>
+
+<script>
+	const labels = {
+		idle: 'Waiting',
+		checking: 'Checking',
+		available: 'Available',
+		taken: 'Taken',
+		invalid: 'Invalid',
+		unknown: 'Unverified',
+	};
+
+	const formNode = document.querySelector('#search');
+	const inputNode = document.querySelector('#handle');
+	const summaryNode = document.querySelector('#summary');
+	if (!(formNode instanceof HTMLFormElement) || !(inputNode instanceof HTMLInputElement) || !(summaryNode instanceof HTMLElement)) {
+		throw new Error('Search UI is missing');
+	}
+
+	const form = formNode;
+	const input = inputNode;
+	const summary = summaryNode;
+	const cards = document.querySelectorAll('[data-platform]');
+	let timer = 0;
+	let wave = 0;
+
+	form.addEventListener('submit', (event) => {
+		event.preventDefault();
+		window.clearTimeout(timer);
+		void run(clean(input.value));
+	});
+
+	input.addEventListener('change', () => {
+		window.clearTimeout(timer);
+		const handle = clean(input.value);
+		if (!handle) reset();
+		else void run(handle);
+	});
+
+	input.addEventListener('input', () => {
+		const next = input.value.replace(/^@+/, '').replace(/[^a-zA-Z0-9._-]/g, '');
+		if (next !== input.value) input.value = next;
+		window.clearTimeout(timer);
+		const handle = clean(next);
+		if (!handle) {
+			reset();
+			return;
+		}
+		timer = window.setTimeout(() => {
+			void run(handle);
+		}, 400);
+	});
+
+	function clean(value: string) {
+		return value.trim().replace(/^@+/, '').toLowerCase();
+	}
+
+	function reset() {
+		wave += 1;
+		for (const card of cards) paint(card, 'idle');
+		summary.hidden = true;
+		summary.textContent = '';
+	}
+
+	async function run(handle: string) {
+		if (!handle) {
+			reset();
+			return;
+		}
+
+		const id = ++wave;
+		for (const card of cards) paint(card, 'checking');
+		summary.hidden = true;
+
+		await Promise.all(
+			[...cards].map(async (card) => {
+				const platform = card.getAttribute('data-platform');
+				if (!platform) return;
+				try {
+					const res = await fetch(`/api/check?handle=${encodeURIComponent(handle)}&platform=${platform}`);
+					const data = await res.json();
+					if (id !== wave) return;
+					const result = data.results?.[0];
+					paint(card, result?.status ?? 'unknown', result?.url);
+				} catch {
+					if (id !== wave) return;
+					paint(card, 'unknown');
+				}
+			}),
+		);
+
+		if (id === wave) tally();
+	}
+
+	function paint(card: Element, status: keyof typeof labels, url?: string) {
+		card.setAttribute('data-status', status);
+		const state = card.querySelector('.state');
+		const link = card.querySelector('.link');
+		if (state) state.textContent = labels[status] ?? 'Waiting';
+		if (link instanceof HTMLAnchorElement) {
+			const show = Boolean(url) && (status === 'taken' || status === 'unknown');
+			link.hidden = !show;
+			link.textContent = status === 'taken' ? 'View profile' : 'Open to confirm';
+			if (url) link.href = url;
+		}
+	}
+
+	function tally() {
+		const counts = { available: 0, taken: 0, unknown: 0, invalid: 0 };
+		for (const card of cards) {
+			const status = card.getAttribute('data-status');
+			if (status && status in counts) counts[status as keyof typeof counts] += 1;
+		}
+		const parts = [];
+		if (counts.available) parts.push(`${counts.available} available`);
+		if (counts.taken) parts.push(`${counts.taken} taken`);
+		if (counts.unknown) parts.push(`${counts.unknown} unverified`);
+		if (counts.invalid) parts.push(`${counts.invalid} invalid`);
+		summary.textContent = parts.join(' · ');
+		summary.hidden = parts.length === 0;
+	}
+</script>
