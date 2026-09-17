@@ -36,7 +36,7 @@ import Layout from '../layouts/Layout.astro';
 
 			<p class="row-label">Social</p>
 			<section class="results" aria-live="polite">
-				<article class="card" data-check data-platform="youtube" data-status="idle" style="--platform: var(--youtube)">
+				<article class="card" data-platform="youtube" style="--platform: var(--youtube)">
 					<div class="card-head">
 						<span class="icon" aria-hidden="true">
 							<svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="3.5" fill="currentColor"></rect><path d="M10.2 9.15 15.4 12l-5.2 2.85z" fill="#070708"></path></svg>
@@ -47,7 +47,7 @@ import Layout from '../layouts/Layout.astro';
 					<a class="link" hidden target="_blank" rel="noreferrer">View</a>
 				</article>
 
-				<article class="card" data-check data-platform="tiktok" data-status="idle" style="--platform: var(--tiktok)">
+				<article class="card" data-platform="tiktok" style="--platform: var(--tiktok)">
 					<div class="card-head">
 						<span class="icon" aria-hidden="true">
 							<svg viewBox="0 0 24 24">
@@ -64,9 +64,9 @@ import Layout from '../layouts/Layout.astro';
 					<a class="link" hidden target="_blank" rel="noreferrer">View</a>
 				</article>
 
-				<article class="card" data-check data-platform="x" data-status="idle" style="--platform: var(--x)">
+				<article class="card" data-platform="x" style="--platform: var(--x)">
 					<div class="card-head">
-						<span class="icon x" aria-hidden="true">
+						<span class="icon" aria-hidden="true">
 							<svg viewBox="0 0 24 24"><path transform="translate(2.2 2.2) scale(.816)" d="M14.7 10.3L22 2h-2.2l-6.1 6.9L8.7 2H2l7.8 11.1L2 22h2.2l6.8-7.7L15.3 22H22l-7.3-11.7zM11.8 13l-.8-1.1L4.9 3.5h2.7l5.1 7.2.8 1.1 6.7 9.5h-2.7L11.8 13z" fill="currentColor"></path></svg>
 						</span>
 						<h2>X (twitter)</h2>
@@ -75,7 +75,7 @@ import Layout from '../layouts/Layout.astro';
 					<a class="link" hidden target="_blank" rel="noreferrer">View</a>
 				</article>
 
-				<article class="card" data-check data-platform="facebook" data-status="idle" style="--platform: var(--facebook)">
+				<article class="card" data-platform="facebook" style="--platform: var(--facebook)">
 					<div class="card-head">
 						<span class="icon" aria-hidden="true">
 							<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"></circle><path d="M13.35 19.2v-6.15h2.08l.31-2.4h-2.39V8.9c0-.7.2-1.18 1.2-1.18h1.28V5.56c-.22-.03-.97-.1-1.84-.1-1.82 0-3.07 1.11-3.07 3.15v1.76H8.8v2.4h2.12v6.43h2.43z" fill="#070708"></path></svg>
@@ -86,7 +86,7 @@ import Layout from '../layouts/Layout.astro';
 					<a class="link" hidden target="_blank" rel="noreferrer">View</a>
 				</article>
 
-				<article class="card" data-check data-platform="instagram" data-status="idle" style="--platform: var(--instagram)">
+				<article class="card" data-platform="instagram" style="--platform: var(--instagram)">
 					<div class="card-head">
 						<span class="icon" aria-hidden="true">
 							<svg viewBox="0 0 24 24"><rect x="2.5" y="2.5" width="19" height="19" rx="5.2" fill="none" stroke="currentColor" stroke-width="2"></rect><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"></circle><circle cx="17.15" cy="6.85" r="1.15" fill="currentColor"></circle></svg>
@@ -100,35 +100,35 @@ import Layout from '../layouts/Layout.astro';
 
 			<p class="row-label">Domains</p>
 			<section class="results" aria-live="polite">
-				<article class="card" data-check data-tld="com" data-status="idle" style="--platform: var(--com)">
+				<article class="card" data-tld="com" style="--platform: var(--com)">
 					<div class="card-head">
 						<h2>.com</h2>
 					</div>
 					<p class="state">Waiting</p>
 					<a class="link" hidden target="_blank" rel="noreferrer">Open</a>
 				</article>
-				<article class="card" data-check data-tld="net" data-status="idle" style="--platform: var(--net)">
+				<article class="card" data-tld="net" style="--platform: var(--net)">
 					<div class="card-head">
 						<h2>.net</h2>
 					</div>
 					<p class="state">Waiting</p>
 					<a class="link" hidden target="_blank" rel="noreferrer">Open</a>
 				</article>
-				<article class="card" data-check data-tld="org" data-status="idle" style="--platform: var(--org)">
+				<article class="card" data-tld="org" style="--platform: var(--org)">
 					<div class="card-head">
 						<h2>.org</h2>
 					</div>
 					<p class="state">Waiting</p>
 					<a class="link" hidden target="_blank" rel="noreferrer">Open</a>
 				</article>
-				<article class="card" data-check data-tld="io" data-status="idle" style="--platform: var(--io)">
+				<article class="card" data-tld="io" style="--platform: var(--io)">
 					<div class="card-head">
 						<h2>.io</h2>
 					</div>
 					<p class="state">Waiting</p>
 					<a class="link" hidden target="_blank" rel="noreferrer">Open</a>
 				</article>
-				<article class="card" data-check data-tld="ai" data-status="idle" style="--platform: var(--ai)">
+				<article class="card" data-tld="ai" style="--platform: var(--ai)">
 					<div class="card-head">
 						<h2>.ai</h2>
 					</div>
@@ -183,7 +183,6 @@ import Layout from '../layouts/Layout.astro';
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
 		justify-content: safe center;
 		padding: 8px 16px 48px;
 	}
@@ -353,10 +352,6 @@ import Layout from '../layouts/Layout.astro';
 		color: var(--platform);
 	}
 
-	.icon.x {
-		color: var(--x);
-	}
-
 	.icon svg {
 		display: block;
 		width: 22px;
@@ -488,38 +483,26 @@ import Layout from '../layouts/Layout.astro';
 		unknown: 'Unverified',
 	};
 
-	const formNode = document.querySelector('#search');
-	const inputNode = document.querySelector('#handle');
-	const summaryNode = document.querySelector('#summary');
-	if (!(formNode instanceof HTMLFormElement) || !(inputNode instanceof HTMLInputElement) || !(summaryNode instanceof HTMLElement)) {
-		throw new Error('Search UI is missing');
-	}
-
-	const form = formNode;
-	const input = inputNode;
-	const summary = summaryNode;
-	const cards = document.querySelectorAll('[data-check]');
+	const form = document.querySelector('#search') as HTMLFormElement;
+	const input = document.querySelector('#handle') as HTMLInputElement;
+	const summary = document.querySelector('#summary') as HTMLElement;
+	const cards = document.querySelectorAll('.card');
 	let timer = 0;
 	let wave = 0;
 
 	form.addEventListener('submit', (event) => {
 		event.preventDefault();
 		window.clearTimeout(timer);
-		void run(clean(input.value));
-	});
-
-	input.addEventListener('change', () => {
-		window.clearTimeout(timer);
-		const handle = clean(input.value);
-		if (!handle) reset();
-		else void run(handle);
+		const handle = input.value.trim().replace(/^@+/, '').toLowerCase();
+		if (handle) void run(handle);
+		else reset();
 	});
 
 	input.addEventListener('input', () => {
 		const next = input.value.replace(/^@+/, '').replace(/[^a-zA-Z0-9._-]/g, '');
 		if (next !== input.value) input.value = next;
 		window.clearTimeout(timer);
-		const handle = clean(next);
+		const handle = next.trim().toLowerCase();
 		if (!handle) {
 			reset();
 			return;
@@ -529,10 +512,6 @@ import Layout from '../layouts/Layout.astro';
 		}, 400);
 	});
 
-	function clean(value: string) {
-		return value.trim().replace(/^@+/, '').toLowerCase();
-	}
-
 	function reset() {
 		wave += 1;
 		for (const card of cards) paint(card, 'idle');
@@ -541,52 +520,25 @@ import Layout from '../layouts/Layout.astro';
 	}
 
 	async function run(handle: string) {
-		if (!handle) {
-			reset();
-			return;
-		}
-
 		const id = ++wave;
 		for (const card of cards) paint(card, 'checking');
 		summary.hidden = true;
 
-		await Promise.all(
-			[...cards].map(async (card) => {
-				const platform = card.getAttribute('data-platform');
-				const tld = card.getAttribute('data-tld');
-				const query = platform ? `platform=${platform}` : tld ? `tld=${tld}` : '';
-				if (!query) return;
-				try {
-					const res = await fetch(`/api/check?handle=${encodeURIComponent(handle)}&${query}`);
-					const data = await res.json();
-					if (id !== wave) return;
-					const result = data.results?.[0];
-					paint(card, result?.status ?? 'unknown', result?.url);
-				} catch {
-					if (id !== wave) return;
-					paint(card, 'unknown');
-				}
-			}),
-		);
+		await Promise.all([...cards].map(async (card) => {
+			const platform = card.getAttribute('data-platform');
+			const query = platform ? `platform=${platform}` : `tld=${card.getAttribute('data-tld')}`;
+			try {
+				const data = await (await fetch(`/api/check?handle=${encodeURIComponent(handle)}&${query}`)).json();
+				if (id !== wave) return;
+				paint(card, data.status ?? 'unknown', data.url);
+			} catch {
+				if (id !== wave) return;
+				paint(card, 'unknown');
+			}
+		}));
 
-		if (id === wave) tally();
-	}
+		if (id !== wave) return;
 
-	function paint(card: Element, status: keyof typeof labels, url?: string) {
-		card.setAttribute('data-status', status);
-		const state = card.querySelector('.state');
-		const link = card.querySelector('.link');
-		if (state) state.textContent = labels[status] ?? 'Waiting';
-		if (link instanceof HTMLAnchorElement) {
-			const show = Boolean(url) && (status === 'taken' || status === 'unknown');
-			link.hidden = !show;
-			const domain = card.hasAttribute('data-tld');
-			link.textContent = status === 'taken' ? (domain ? 'Open site' : 'View profile') : 'Open to confirm';
-			if (url) link.href = url;
-		}
-	}
-
-	function tally() {
 		const counts = { available: 0, taken: 0, unknown: 0, invalid: 0 };
 		for (const card of cards) {
 			const status = card.getAttribute('data-status');
@@ -599,5 +551,18 @@ import Layout from '../layouts/Layout.astro';
 		if (counts.invalid) parts.push(`${counts.invalid} invalid`);
 		summary.textContent = parts.join(' · ');
 		summary.hidden = parts.length === 0;
+	}
+
+	function paint(card: Element, status: keyof typeof labels, url?: string) {
+		card.setAttribute('data-status', status);
+		card.querySelector('.state')!.textContent = labels[status];
+		const link = card.querySelector('.link') as HTMLAnchorElement;
+		const show = Boolean(url) && (status === 'taken' || status === 'unknown');
+		link.hidden = !show;
+		if (!show) return;
+		link.textContent = status === 'taken'
+			? card.hasAttribute('data-tld') ? 'Open site' : 'View profile'
+			: 'Open to confirm';
+		link.href = url!;
 	}
 </script>

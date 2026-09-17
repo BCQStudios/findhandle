@@ -1,11 +1,11 @@
-export const PLATFORM_IDS = ['youtube', 'tiktok', 'x', 'facebook', 'instagram'] as const;
-export const TLD_IDS = ['com', 'net', 'org', 'io', 'ai'] as const;
+const PLATFORM_IDS = ['youtube', 'tiktok', 'x', 'facebook', 'instagram'] as const;
+const TLD_IDS = ['com', 'net', 'org', 'io', 'ai'] as const;
 
-export type PlatformId = (typeof PLATFORM_IDS)[number];
-export type TldId = (typeof TLD_IDS)[number];
-export type CheckStatus = 'available' | 'taken' | 'invalid' | 'unknown';
+type PlatformId = (typeof PLATFORM_IDS)[number];
+type TldId = (typeof TLD_IDS)[number];
+type CheckStatus = 'available' | 'taken' | 'invalid' | 'unknown';
 
-export type CheckResult = {
+type CheckResult = {
 	platform?: PlatformId;
 	tld?: TldId;
 	status: CheckStatus;
@@ -25,7 +25,7 @@ const RULES: Record<PlatformId, RegExp> = {
 	instagram: /^(?!.*\.\.)(?!\.)[a-z0-9._]{1,30}(?<!\.)$/,
 };
 
-export const PROFILES: Record<PlatformId, (handle: string) => string> = {
+const PROFILES: Record<PlatformId, (handle: string) => string> = {
 	youtube: (handle) => `https://www.youtube.com/@${handle}`,
 	tiktok: (handle) => `https://www.tiktok.com/@${handle}`,
 	x: (handle) => `https://x.com/${handle}`,
@@ -44,26 +44,14 @@ const RDAP: Record<TldId, (name: string) => string> = {
 };
 
 export function isPlatformId(value: string): value is PlatformId {
-	return (PLATFORM_IDS as readonly string[]).includes(value);
+	return PLATFORM_IDS.includes(value as PlatformId);
 }
 
 export function isTldId(value: string): value is TldId {
-	return (TLD_IDS as readonly string[]).includes(value);
+	return TLD_IDS.includes(value as TldId);
 }
 
-export function normalizeHandle(raw: string): string {
-	return raw.trim().replace(/^@+/, '').toLowerCase();
-}
-
-export async function checkPlatforms(handle: string, platforms: PlatformId[]): Promise<CheckResult[]> {
-	return Promise.all(platforms.map((platform) => checkPlatform(handle, platform)));
-}
-
-export async function checkTlds(handle: string, tlds: TldId[]): Promise<CheckResult[]> {
-	return Promise.all(tlds.map((tld) => checkTld(handle, tld)));
-}
-
-async function checkTld(handle: string, tld: TldId): Promise<CheckResult> {
+export async function checkTld(handle: string, tld: TldId): Promise<CheckResult> {
 	const url = `https://${handle}.${tld}`;
 	if (!DOMAIN_RULE.test(handle)) {
 		return { tld, status: 'invalid', url };
@@ -81,7 +69,7 @@ async function checkTld(handle: string, tld: TldId): Promise<CheckResult> {
 	}
 }
 
-async function checkPlatform(handle: string, platform: PlatformId): Promise<CheckResult> {
+export async function checkPlatform(handle: string, platform: PlatformId): Promise<CheckResult> {
 	const url = PROFILES[platform](handle);
 	if (!RULES[platform].test(handle)) {
 		return { platform, status: 'invalid', url };
@@ -103,10 +91,9 @@ async function load(url: string, headers: Record<string, string> = {}) {
 			Accept: 'text/html,application/json;q=0.9,*/*;q=0.8',
 			...headers,
 		},
-		redirect: 'follow',
 		signal: AbortSignal.timeout(8000),
 	});
-	return { status: res.status, text: await res.text(), url: res.url };
+	return { status: res.status, text: await res.text() };
 }
 
 const CHECKERS: Record<PlatformId, (handle: string) => Promise<CheckStatus>> = {
