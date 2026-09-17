@@ -9,6 +9,9 @@ import Layout from '../layouts/Layout.astro';
 				<span class="mark" aria-hidden="true"></span>
 				FindHandle
 			</a>
+			<button type="button" id="theme" role="switch" aria-checked="false" aria-label="Light mode">
+				<span class="knob" aria-hidden="true"></span>
+			</button>
 		</header>
 
 		<main>
@@ -62,7 +65,7 @@ import Layout from '../layouts/Layout.astro';
 
 						<article class="row" data-platform="x">
 							<span class="logo" aria-hidden="true">
-								<svg viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.112656) translate(-12.035 -12)"><path fill="#fff" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.425 6.231H2.72l7.662-8.57L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></g></svg>
+								<svg viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.112656) translate(-12.035 -12)"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.425 6.231H2.72l7.662-8.57L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></g></svg>
 							</span>
 							<h2>X</h2>
 							<a class="link" hidden target="_blank" rel="noreferrer">View</a>
@@ -151,6 +154,9 @@ import Layout from '../layouts/Layout.astro';
 	}
 
 	.top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 		padding: 20px 24px;
 	}
 
@@ -168,7 +174,7 @@ import Layout from '../layouts/Layout.astro';
 	.mark {
 		width: 14px;
 		height: 14px;
-		border: 2px solid #fff;
+		border: 2px solid var(--fg);
 		border-radius: 99px;
 		box-shadow: 4px 4px 0 0 var(--available);
 	}
@@ -228,10 +234,11 @@ import Layout from '../layouts/Layout.astro';
 		background: var(--bar);
 		color: var(--ink);
 		border-radius: 10px;
+		box-shadow: 0 0 0 1px var(--stroke);
 	}
 
 	.at {
-		color: #6b6b73;
+		color: var(--muted);
 		font-size: 22px;
 		font-weight: 700;
 		line-height: 1;
@@ -251,7 +258,7 @@ import Layout from '../layouts/Layout.astro';
 	}
 
 	#handle::placeholder {
-		color: #8b8b93;
+		color: var(--muted);
 	}
 
 	.bar:focus-within {
@@ -259,21 +266,64 @@ import Layout from '../layouts/Layout.astro';
 		outline-offset: 3px;
 	}
 
-	button {
+	.bar button {
 		height: 46px;
 		min-width: 96px;
 		padding: 0 18px;
 		border: 0;
 		border-radius: 8px;
-		background: var(--ink);
-		color: var(--bar);
+		background: var(--available);
+		color: var(--ink);
 		font-size: 14px;
 		font-weight: 700;
 		cursor: pointer;
 	}
 
-	button:hover {
-		background: #1d1d22;
+	.bar button:hover {
+		background: color-mix(in srgb, var(--available) 80%, var(--ink));
+	}
+
+	:global(html[data-theme='light']) .bar button {
+		background: var(--ink);
+		color: var(--bar);
+	}
+
+	:global(html[data-theme='light']) .bar button:hover {
+		background: color-mix(in srgb, var(--ink) 86%, var(--fg));
+	}
+
+	#theme {
+		width: 42px;
+		height: 24px;
+		padding: 3px;
+		border: 0;
+		border-radius: 99px;
+		background: var(--line);
+		cursor: pointer;
+		transition: background-color 0.25s ease;
+	}
+
+	#theme:focus-visible {
+		outline: 2px solid var(--fg);
+		outline-offset: 3px;
+	}
+
+	.knob {
+		display: block;
+		width: 18px;
+		height: 18px;
+		border-radius: 99px;
+		background: var(--fg);
+		transition: transform 0.25s ease, background-color 0.25s ease;
+	}
+
+	#theme[aria-checked='true'] {
+		background: var(--ink);
+	}
+
+	#theme[aria-checked='true'] .knob {
+		transform: translateX(18px);
+		background: var(--bar);
 	}
 
 	.boards {
@@ -306,6 +356,18 @@ import Layout from '../layouts/Layout.astro';
 		display: block;
 		width: 20px;
 		height: 20px;
+	}
+
+	[data-platform='x'] .logo {
+		color: var(--fg);
+	}
+
+	:global(html[data-theme='light']) [data-platform='tiktok'] path:not(:last-of-type) {
+		fill: none;
+	}
+
+	:global(html[data-theme='light']) [data-platform='tiktok'] path:last-of-type {
+		fill: var(--fg);
 	}
 
 	h2 {
@@ -367,7 +429,7 @@ import Layout from '../layouts/Layout.astro';
 
 	footer {
 		padding: 0 24px 24px;
-		color: #6d6d75;
+		color: var(--muted);
 		font-size: 12px;
 		text-align: center;
 	}
@@ -409,12 +471,17 @@ import Layout from '../layouts/Layout.astro';
 			height: 54px;
 		}
 
-		button {
+		.bar button {
 			padding: 0 14px;
 		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
+		#theme,
+		.knob {
+			transition: none;
+		}
+
 		.row[data-status='checking'] .state {
 			animation: none;
 			opacity: 0.7;
@@ -432,12 +499,21 @@ import Layout from '../layouts/Layout.astro';
 		unknown: 'Unverified',
 	};
 
+	const themeBtn = document.querySelector('#theme') as HTMLButtonElement;
 	const form = document.querySelector('form') as HTMLFormElement;
 	const input = document.querySelector('#handle') as HTMLInputElement;
 	const summary = document.querySelector('#summary') as HTMLElement;
 	const rows = document.querySelectorAll('.row');
 	let timer = 0;
 	let wave = 0;
+
+	const light = () => document.documentElement.dataset.theme === 'light';
+	themeBtn.setAttribute('aria-checked', String(light()));
+	themeBtn.addEventListener('click', () => {
+		document.documentElement.dataset.theme = light() ? 'dark' : 'light';
+		localStorage.theme = document.documentElement.dataset.theme;
+		themeBtn.setAttribute('aria-checked', String(light()));
+	});
 
 	form.addEventListener('submit', (event) => {
 		event.preventDefault();

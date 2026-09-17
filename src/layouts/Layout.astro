@@ -10,6 +10,9 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>FindHandle</title>
+		<script is:inline>
+			if (localStorage.theme === 'light') document.documentElement.dataset.theme = 'light';
+		</script>
 	</head>
 	<body>
 		<slot />
@@ -18,6 +21,7 @@
 
 <style is:global>
 	:root {
+		color-scheme: dark;
 		--bg: #161618;
 		--fg: #f4f4f5;
 		--muted: #9a9aa3;
@@ -27,6 +31,17 @@
 		--taken: #ff2a2a;
 		--available: #17d36a;
 		--unknown: #d0d0d6;
+		--stroke: transparent;
+	}
+
+	html[data-theme='light'] {
+		color-scheme: light;
+		--bg: #eeeef0;
+		--fg: #141416;
+		--muted: #5c5c64;
+		--line: #d2d2d8;
+		--unknown: #3f3f46;
+		--stroke: #d2d2d8;
 	}
 
 	* {
@@ -44,6 +59,13 @@
 		color: var(--fg);
 		font-family: "Segoe UI", Inter, ui-sans-serif, system-ui, sans-serif;
 		-webkit-font-smoothing: antialiased;
+		transition: background-color 0.25s ease, color 0.25s ease;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		body {
+			transition: none;
+		}
 	}
 
 	button,
