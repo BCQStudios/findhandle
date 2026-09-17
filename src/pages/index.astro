@@ -138,7 +138,7 @@ import Layout from '../layouts/Layout.astro';
 				</section>
 			</div>
 
-			<p id="summary" hidden></p>
+			<p id="summary"></p>
 		</main>
 
 		<footer>
@@ -419,6 +419,7 @@ import Layout from '../layouts/Layout.astro';
 		margin: 18px 0 0;
 		color: var(--muted);
 		font-size: 13px;
+		min-height: 1lh;
 	}
 
 	footer {
@@ -524,7 +525,7 @@ import Layout from '../layouts/Layout.astro';
 		if (!handle) {
 			wave += 1;
 			for (const row of rows) paint(row, 'idle');
-			summary.hidden = true;
+			summary.textContent = '';
 			return;
 		}
 		timer = window.setTimeout(() => void run(handle), 400);
@@ -533,7 +534,6 @@ import Layout from '../layouts/Layout.astro';
 	async function run(handle: string) {
 		const id = ++wave;
 		for (const row of rows) paint(row, 'checking');
-		summary.hidden = true;
 		void fetch(`/api/search?handle=${encodeURIComponent(handle)}`);
 
 		await Promise.all([...rows].map(async (row) => {
@@ -557,7 +557,6 @@ import Layout from '../layouts/Layout.astro';
 			counts.unknown && `${counts.unknown} unverified`,
 			counts.invalid && `${counts.invalid} invalid`,
 		].filter(Boolean).join(' · ');
-		summary.hidden = false;
 	}
 
 	function paint(row: Element, status: keyof typeof labels, url = '') {
